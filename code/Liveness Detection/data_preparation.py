@@ -32,7 +32,6 @@ def data_preparation(audioFile):
     fl = np.zeros(1, 97)
     # ------ Stage 1: Signal transformation ------
     # Read the input signal:
-    # output_file_path=load_audio_file(os.path.join(data_path, filename))
     signal, _ = librosa.load(audioFile, sr=16000)
 
     # Compute STFT for the input signal:
