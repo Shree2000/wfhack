@@ -1,6 +1,8 @@
 # Section 5.3
 # Contains the extraction process of 4 features used in Void system
+# feature extraction
 
+# !pip install pydub
 
 import numpy as np
 import scipy.io.wavfile as wav
@@ -11,7 +13,13 @@ import os
 import matplotlib.pyplot as plt
 import math
 import librosa
-
+import librosa
+from sklearn import svm
+from sklearn import svm
+import pickle
+from sklearn.model_selection import GridSearchCV
+from sklearn.neighbors import NearestCentroid
+from pydub import AudioSegment
 
 def _stft(y):
     n_fft, hop_length, _ = _stft_parameters()
@@ -56,12 +64,12 @@ def LinearityDegreeFeatures(power_normal):
     plt.rc('font', family='serif')
     plt.figure()
     plt.plot(x_values, power_cdf, color='red', marker='d', label=r'$\textbf{pow}_\textbf{cdf}$')
-    plt.plot(x_values, np.polyval(parameter_2, x_values), color='blue', 
+    plt.plot(x_values, np.polyval(parameter_2, x_values), color='blue',
         marker='o', label=r'$\textbf{fitting curve to pow}_\textbf{cdf}$')
     plt.xlabel(r'\textbf{Frequency (kHz)}', fontsize=16)
-    plt.ylabel(r'$\textbf{pow}_\textbf{cdf}$', fontsize=16) 
+    plt.ylabel(r'$\textbf{pow}_\textbf{cdf}$', fontsize=16)
     # The coordinate of starting point and end point of the arrow should be chosen manually:
-    plt.annotate('rho = %.3f \n q = %.3f' % (rho, q), xy=(0.4, np.polyval(parameter_2, 0.4)-0.1), 
+    plt.annotate('rho = %.3f \n q = %.3f' % (rho, q), xy=(0.4, np.polyval(parameter_2, 0.4)-0.1),
         xytext=(1, 0.3), arrowprops=dict(arrowstyle="->",connectionstyle="arc3"), fontsize=12)
     plt.legend(fontsize=14)
     plt.grid()
@@ -72,10 +80,10 @@ def LinearityDegreeFeatures(power_normal):
 
 
 def HighPowerFrequencyFeatures(FV_LFP, omega):
-    # Calculate high power frequency 
+    # Calculate high power frequency
     # input: FV_LFP, omega
     # output: FV_HPF
-    
+
     # 1. Find peaks from FV_LFP (returns the indices of found peaks):
     peaks_idx, _ = find_peaks(FV_LFP, height=0)
     # Obtain corresponding values of the peaks:
@@ -122,9 +130,9 @@ def lpc_to_lpcc(lpc):
     return lpcc[1:13]
 
 
-def extract_lpcc(wav_path, order):
-    y, _ = librosa.load(wav_path, sr=16000)
-    lpc = librosa.lpc(y, order)
+def extract_lpcc(wav_file, order):
+    y, _ = librosa.load(wav_file, sr=16000)
+    lpc = librosa.lpc(y,order=order)
     lpcc = np.array(lpc_to_lpcc(lpc))
     return lpcc
 
@@ -139,7 +147,7 @@ def calc_stft(signal, sample_rate=16000, frame_size=512, frame_stride=128, winfu
     # zero padding
     pad_signal_length = num_frames * frame_step + frame_size
     z = np.zeros((pad_signal_length - signal_length))
-    # Pad signal to make sure that all frames have equal number of samples 
+    # Pad signal to make sure that all frames have equal number of samples
     # without truncating any samples from the original signal
     pad_signal = np.append(signal, z)
 
@@ -165,12 +173,12 @@ def calc_stft(signal, sample_rate=16000, frame_size=512, frame_stride=128, winfu
     # zero padding
     pad_signal_length = num_frames * frame_step + frame_length
     z = np.zeros((pad_signal_length - signal_length))
-    # Pad signal to make sure that all frames have equal number of samples 
+    # Pad signal to make sure that all frames have equal number of samples
     # without truncating any samples from the original signal
     pad_signal = np.append(signal, z)
 
     # Slice the signal into frames from indices
-    indices = np.tile(np.arange(0, frame_length), (num_frames, 1)) + 
+    indices = np.tile(np.arange(0, frame_length), (num_frames, 1)) +
         np.tile(np.arange(0, num_frames * frame_step, frame_step), (frame_length, 1)).T
     frames = pad_signal[indices.astype(np.int32, copy=False)]
     # Get windowed frames
@@ -182,3 +190,23 @@ def calc_stft(signal, sample_rate=16000, frame_size=512, frame_stride=128, winfu
     pow_frames = (1.0 / NFFT) * ((mag_frames) ** 2)
     '''
     return pow_frames
+
+
+def load_audio_file(file_path):
+    # Check the file extension
+    file_ext = os.path.splitext(file_path)[1]
+    if file_ext.lower() == '.mp3':
+        # Load MP3 file
+        audio = AudioSegment.from_mp3(file_path)
+        # Construct the output file path by replacing the extension with '.wav'
+        output_file_path = os.path.splitext(file_path)[0] + '.wav'
+        # Convert MP3 to WAV and save the file
+        audio.export(output_file_path, format="wav")
+    elif file_ext.lower() == '.wav':
+        # Load WAV file
+        audio = AudioSegment.from_wav(file_path)
+        output_file_path = file_path  # No need to save if it's already in WAV format
+    else:
+        raise ValueError("Unsupported file format. Only MP3 and WAV are supported.")
+
+    return output_file_path
