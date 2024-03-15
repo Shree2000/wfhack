@@ -1,30 +1,20 @@
 Liveliness detection for voice samples is crucial in various applications such as speaker verification, fraud prevention, and security systems. This project implements a Support Vector Machine (SVM) machine learning model for determining the authenticity of voice recordings. The SVM model is trained on a dataset consisting of both genuine and spoofed voice samples.
 
-             +------------------+
-             | Data Collection  |
-             +--------+---------+
+     +-------------------------------------+
+     | Data preparation and preprocessing  |
+     +--------+----------------------------+
                       |
                       v
-             +------------------+
-             | Preprocessing    |
-             +--------+---------+
+           +--------------------+
+           | Feature Extraction |
+           +--------+-----------+
                       |
                       v
-             +------------------+
-             | Feature Extraction|
-             +--------+---------+
+         +----------------------------+
+         | Audio Liveliness Detection |
+         +--------+-------------------+
                       |
                       v
-             +------------------+
-             | Model Training   |
-             +--------+---------+
-                      |
-                      v
-             +------------------+
-             | Model Evaluation |
-             +--------+---------+
-                      |
-                      v
-             +------------------+
-             | Deployment       |
-             +------------------+
+               +-------------+
+               | Prediction  |
+               +------+------+
