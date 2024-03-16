@@ -2,6 +2,7 @@ from flask import Flask, render_template, request,redirect
 from speec2emotion import predict
 from noiseIntensityDetection import findIntensity
 from deepfakeDetection import predictDeepFake
+from predict import predict as predictLive
 
 
 import tempfile
@@ -37,13 +38,13 @@ def voice_analyze():
       audio_file.save(file_path)
       audio_data=audio_file.read()
       
- 
+  
       intensity=findIntensity(file_path)
       emotion=predict(file_path)
       ans=predictDeepFake(file_path)
       # audio_data = audio_file.read()
       # Export the audio to WAV format
-      
+      live=predictLive(file_path)
       if os.path.exists(file_path):
         print("file removed")
         os.remove(file_path)
@@ -51,7 +52,9 @@ def voice_analyze():
       return {"status": "okay",
               "deepFakeStatus":ans,
               "emotion":emotion,
-               "backgroundsound": intensity
+              "liveliness":live[0],
+               "backgroundsound": intensity,
+               "file-path":file_path
               }
     else:
       return "No audio file uploaded.", 400
