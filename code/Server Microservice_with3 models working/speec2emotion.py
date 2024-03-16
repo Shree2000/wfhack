@@ -6,9 +6,9 @@ import numpy as np
 
 def preprocess_audio(path):
     _, sr = librosa.load(path)
-    raw_audio = AudioSegment.from_file(path)
+    # raw_audio = AudioSegment.from_file(path)
     
-    samples = np.array(raw_audio.get_array_of_samples(), dtype='float32')
+    samples = np.array(_, dtype=np.float32)
     trimmed, _ = librosa.effects.trim(samples, top_db=25)
     
     padded = np.pad(trimmed, (0, 180000-len(trimmed)), 'constant')

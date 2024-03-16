@@ -2,14 +2,12 @@ from flask import Flask, render_template, request,redirect
 from speec2emotion import predict
 from noiseIntensityDetection import findIntensity
 from deepfakeDetection import predictDeepFake
-import tempfile
-from werkzeug.datastructures import FileStorage
-from pydub import AudioSegment
+
+
 import tempfile
 import os
- 
 
-    
+   
 
 app = Flask(__name__)
 
@@ -31,23 +29,29 @@ def voice_analyze():
     print(audio_file)
     if audio_file:
       
+
       app_dir = os.path.dirname(os.path.abspath(__file__))
     
     # Save the uploaded file to the same directory as app.py
       file_path = os.path.join(app_dir, audio_file.filename)
       audio_file.save(file_path)
-      print(file_path)
+      audio_data=audio_file.read()
+      
+ 
       intensity=findIntensity(file_path)
       emotion=predict(file_path)
       ans=predictDeepFake(file_path)
-      audio_data = audio_file.read()
-
+      # audio_data = audio_file.read()
+      # Export the audio to WAV format
+      
       if os.path.exists(file_path):
+        print("file removed")
         os.remove(file_path)
+
       return {"status": "okay",
               "deepFakeStatus":ans,
               "emotion":emotion,
-              "backgroundsound": intensity
+               "backgroundsound": intensity
               }
     else:
       return "No audio file uploaded.", 400

@@ -1,6 +1,6 @@
 from transformers import AutoFeatureExtractor, AutoModelForAudioClassification
 import librosa,torch
-
+import numpy as np
 def predictDeepFake(filename):
 # Load the model from the local directory
 
@@ -18,7 +18,11 @@ def predictDeepFake(filename):
     inputs = {
     "input_values": audio_features.input_values,
     }
-    inputs["input_values"] = torch.tensor(audio_features["input_values"])
+        # Convert the list of NumPy arrays to a single NumPy array
+    input_values_array = np.array(audio_features["input_values"])
+
+    # Convert the NumPy array to a PyTorch tensor
+    inputs["input_values"] = torch.tensor(input_values_array)
     outputs = model(**inputs)
     logits = outputs.logits
 
