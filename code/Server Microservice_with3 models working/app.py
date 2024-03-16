@@ -3,6 +3,7 @@ from speec2emotion import predict
 from noiseIntensityDetection import findIntensity
 from deepfakeDetection import predictDeepFake
 from predict import predict as predictLive
+from speechToText import recognize_from_file
 
 
 import tempfile
@@ -61,6 +62,16 @@ def voice_analyze():
       except Exception as e:
         print("Livliness prediction function error",e)
         live="Error in liveliness prediction call"
+
+      try:
+        language, text, msg=recognize_from_file(file_path)
+      except Exception as e:
+        print("Speech to Text function error",e)
+        language="Error in speech to text call"
+        text="Error in speech to text call"
+        msg="Error"
+
+      
       
       if os.path.exists(file_path):
           print("file removed")
@@ -71,6 +82,11 @@ def voice_analyze():
                 "emotion":emotion,
                 "liveliness":live,
                 "backgroundsound": intensity,
+                "speechtotext": {
+                    "language": language,
+                    "text": text,
+                    "error message": msg
+                },
                 "file-path":file_path
                 }
     else:
