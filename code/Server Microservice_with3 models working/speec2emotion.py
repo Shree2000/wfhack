@@ -7,10 +7,17 @@ import numpy as np
 def preprocess_audio(path):
     _, sr = librosa.load(path)
     # raw_audio = AudioSegment.from_file(path)
-    
+   
+        
+
     samples = np.array(_, dtype=np.float32)
+
     trimmed, _ = librosa.effects.trim(samples, top_db=25)
-    
+    if len(trimmed) > 180000:
+        # Trim the signal to 18000 samples
+        trimmed = trimmed[:180000]
+        print("lenggth of trimed",len(trimmed))
+
     padded = np.pad(trimmed, (0, 180000-len(trimmed)), 'constant')
     return padded, sr
 

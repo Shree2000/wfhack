@@ -38,24 +38,41 @@ def voice_analyze():
       audio_file.save(file_path)
       audio_data=audio_file.read()
       
-  
-      intensity=findIntensity(file_path)
-      emotion=predict(file_path)
-      ans=predictDeepFake(file_path)
-      # audio_data = audio_file.read()
-      # Export the audio to WAV format
-      live=predictLive(file_path)
+      try:
+        intensity=findIntensity(file_path)
+      except Exception as e:
+        print("Intensity function error",e)
+        intensity="Error in Intensity call"
+      try:
+        emotion=predict(file_path)
+      except Exception as e:
+        print("EMotion prediction function error",e)
+        emotion="Error in Emotion prediction call"
+      try:
+        ans=predictDeepFake(file_path)
+      except Exception as e:
+        print("Deepfake prediction function error",e)
+        ans="Error in Deepfake prediction call"
+      
+        # audio_data = audio_file.read()
+        # Export the audio to WAV format
+      try:
+        live=predictLive(file_path)[0]
+      except Exception as e:
+        print("Livliness prediction function error",e)
+        live="Error in liveliness prediction call"
+      
       if os.path.exists(file_path):
-        print("file removed")
-        os.remove(file_path)
+          print("file removed")
+          os.remove(file_path)
 
       return {"status": "okay",
-              "deepFakeStatus":ans,
-              "emotion":emotion,
-              "liveliness":live[0],
-               "backgroundsound": intensity,
-               "file-path":file_path
-              }
+                "deepFakeStatus":ans,
+                "emotion":emotion,
+                "liveliness":live,
+                "backgroundsound": intensity,
+                "file-path":file_path
+                }
     else:
       return "No audio file uploaded.", 400
 

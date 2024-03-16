@@ -26,7 +26,7 @@ from data_preparation import data_preparation
 def predict(file_path):
     x_eval=data_preparation(file_path)
     # Load the the SVM classifier model:
-    file_model = os.path.join(os.getcwd(),'models','svm.pkl')
+    file_model = os.path.join(os.getcwd(),'models','F:\Hackathon_2024\Server Integration Models\Server Microservice_with3 models working\Models\svm.pkl')
     if os.path.isfile(file_model):
         # Load the extracted features and corresponding labels:
         with open(file_model, 'rb') as f:
