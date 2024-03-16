@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request,redirect
 
-app = Flask(__name__)
+app = Flask(__name__,static_folder='static')
 
 @app.route("/", methods=["GET"])
 def index():
@@ -16,10 +16,11 @@ def voice_analyze():
   if request.method == "GET":
     return render_template("voice_form.html")
   elif request.method == "POST":
-    audio_file = request.files.get("audio_file")
+    audio_file = request.files['audio']
+    filename = audio_file.filename
     if audio_file:
       audio_data = audio_file.read()
-      return {"status": "okay"}
+      return {"status": "okay","deepFakeStatus":"true","emotion":"Happy","backgroundsound":63,"fileName":filename}
     else:
       return "No audio file uploaded.", 400
 
