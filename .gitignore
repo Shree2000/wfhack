@@ -1,2 +1,4 @@
 code/ProcessAudio/aispeech/output*
 code/ProcessAudio/aispeech/output_2.mp3
+__pycache__/
+
