@@ -1,0 +1,31 @@
+from transformers import AutoFeatureExtractor, AutoModelForAudioClassification
+import librosa,torch
+
+def predictDeepFake(filename):
+# Load the model from the local directory
+
+
+    model_name = "MattyB95/AST-VoxCelebSpoof-Synthetic-Voice-Detection"
+
+    # Load the model from the local directory
+    extractor = AutoFeatureExtractor.from_pretrained(model_name)
+   
+    # model = AutoModelForAudioClassification.from_pretrained("F:\Hackathon_2024\Server Integration Models\Server Microservice\Models\s2e_model")
+    model = AutoModelForAudioClassification.from_pretrained(model_name)
+
+    audio_data, sample_rate = librosa.load(filename, sr=16000)
+    audio_features = extractor(audio_data, sampling_rate=16000)
+    inputs = {
+    "input_values": audio_features.input_values,
+    }
+    inputs["input_values"] = torch.tensor(audio_features["input_values"])
+    outputs = model(**inputs)
+    logits = outputs.logits
+
+    # Interpret results based on model's task (may require additional information)
+    # Example (assuming binary classification):
+    predicted_class = torch.argmax(logits, dim=-1).item() # Assuming logits have class probabilities
+    if predicted_class == 0:
+     return "Audio sample is likely human voice."
+    else:
+     return "Audio sample is likely synthetic voice."
