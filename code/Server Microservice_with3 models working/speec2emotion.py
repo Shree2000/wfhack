@@ -1,9 +1,10 @@
 import librosa
 from tensorflow.keras.models import Sequential, model_from_json
-
+import os
 from pydub import AudioSegment, effects
 import numpy as np
 
+current_directory = os.path.dirname(__file__)
 def preprocess_audio(path):
     _, sr = librosa.load(path)
     # raw_audio = AudioSegment.from_file(path)
@@ -34,12 +35,12 @@ def encode(label):
     return emotion_dic.get(label)
 
 def loadModel():
-    json_file = open('F:\Hackathon_2024\Server Integration Models\Server Microservice_with3 models working\Models\CNN_model.json', 'r')
+    json_file = open(os.path.join(current_directory,r'Models\CNN_model.json'),'r')
     loaded_model_json = json_file.read()
     json_file.close()
     loaded_model = model_from_json(loaded_model_json)
     # load weights into new model
-    loaded_model.load_weights("F:\Hackathon_2024\Server Integration Models\Server Microservice_with3 models working\Models\CNN_model_.weights.h5")
+    loaded_model.load_weights(os.path.join(current_directory,r'Models\CNN_model_.weights.h5'),'r')
     print("Loaded model from disk")
     return loaded_model
 
