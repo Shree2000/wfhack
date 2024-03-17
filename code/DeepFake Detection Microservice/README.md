@@ -2,14 +2,15 @@ This file focuses on building a deep learning model for classifying audio files 
 
 We have used two models for deep fake detection and created custom model out of it.
 
-## Deepfake Auoencoder (Model 1)
+## Deepfake Auoencoder and CNN 
 ### Model Architecture
  1. Gathered audio samples from the internet, preprocessed them into a suitable format, and extracted features. Split the dataset into training and testing sets.
- 2. Designed an autoencoder that encodes audio features into a lower-dimensional representation and then decodes them to reconstruct the original features.
+ 2. Designed an autoencoder that encodes audio features into a lower-dimensional representation and then decodes them to reconstruct the original features for CNN the model architecture is attached below as summary.
  3. Trained the bottleneck autoencoder using genuine voice samples from the training set, optimizing parameters to minimize the reconstruction error.
  4. Applied the trained autoencoder to both genuine and suspected deepfake voice samples from the testing set and calculateed the reconstruction error for each sample.
  5. Then we set a threshold for the reconstruction error. Samples with errors above this threshold are flagged as potential deepfakes.
- 6. Evaluated the model's performance using accuracy as the parameter. The accuracy came out to be ~96%.
+ 6. Both the Models were trained on multilingual dataset containing English and Spanish dataaround 15k real voice and 1k fake ai voice dataset.
+ 7. Evaluated the model's performance using accuracy as the parameter. The accuracy came out to be ~96% for autoencoder, for CNN the accuracy came out to be 99.5%.
 
 ### Process flow of used autoencoder.
 ![image](https://github.com/Hackathon2024-March/sherlocked/assets/72347511/7929179b-62bc-4424-ad27-09639e5106f1)
