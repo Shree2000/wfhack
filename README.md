@@ -40,25 +40,12 @@ The primary objective of this project is to develop effective countermeasures ag
 #### For Speech to text Conversion
 
 
-2. How to build
+## Setup
+1. Git Clone this repository.
 
----
-## Hypotheses
+```bash
+$ https://github.com/Hackathon2024-March/sherlocked.git
+$ cd code/Server Microservice_with3 models working
+```
 
----
-## Final solution deliverables
-| Date | Creator | Artifact |
-| --- | --- | --- |
-|  |  |  |
 
----
-## Learnings
-${learnings}
-
----
-## Recommendations
-${recommendations}
-
-${nextVersion}
-
----
