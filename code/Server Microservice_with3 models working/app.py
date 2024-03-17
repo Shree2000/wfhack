@@ -77,10 +77,11 @@ def voice_analyze():
           print("file removed")
           os.remove(file_path)
       filename = audio_file.filename
+      detectedVoice= False if (text is None or text == "") else True
       return {
               "status":"success",
               "analysis":{
-                "detectedVoice":True,
+                "detectedVoice":detectedVoice,
                 "voiceType":ans,
                 "confidenceScore":{
                   "aiProbability":5,
