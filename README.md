@@ -32,33 +32,24 @@ The primary objective of this project is to develop effective countermeasures ag
    - SAVEE is a dataset containing audio recordings of spoken English sentences representing different emotions.
   
 #### For DeepFake Prediction  
+1. The real voice dataset provided from https://commonvoice.mozilla.org/en/datasets which contains the common voice of real users in different languages, We took the english(~1GB) and spanish (~800 MB) voice data
+2. For the fake ai voice dataset we took the data provided by the team in the repo and some other were taken by writing a script for api calls to elevenlabs (We could get only handlful of data from here as it is limited to certain number of free calls)
 
 #### For background Intensity Detection
+1. Here we recorded custom voice from our phone and then we extracted the noise signal using noisereduce python library.
+2. We then compared the intensity of background noise with the audio without noise to decide the background sound level.
 
 #### For Liveliness detection  
 
 #### For Speech to text Conversion
 
 
-2. How to build
+## Setup
+1. Git Clone this repository.
 
----
-## Hypotheses
+```bash
+$ https://github.com/Hackathon2024-March/sherlocked.git
+$ cd code/Server Microservice_with3 models working
+```
 
----
-## Final solution deliverables
-| Date | Creator | Artifact |
-| --- | --- | --- |
-|  |  |  |
 
----
-## Learnings
-${learnings}
-
----
-## Recommendations
-${recommendations}
-
-${nextVersion}
-
----
