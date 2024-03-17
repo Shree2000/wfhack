@@ -56,5 +56,5 @@ $ cd code/Server Microservice_with3 models working
  ```bash
 $ python app.py
 ```
-3. If the build and run went without problems, then you can follow the link http://127.0.0.1:5000/. (Note that you won't see any content on the site since the database is empty)
+3. If the build and run went without problems, then you can follow the link http://127.0.0.1:5000/.
 
