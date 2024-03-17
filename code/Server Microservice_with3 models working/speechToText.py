@@ -4,7 +4,7 @@ import wave
 import contextlib
 import subprocess
 
-speechkey = "f3ba924f3b9c485fac96a108d508b66e"
+speechkey = "1b8e33a2ea1548829b589bdfd8d9aaff"
 region="eastus"
 
 from pydub import AudioSegment
