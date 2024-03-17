@@ -91,7 +91,7 @@ def voice_analyze():
                   "backgroundNoiseLevel":intensity,
                   "language":language,
                   "text": text,
-                  "liveliness":live,
+                  "liveliness":(1-live),
                 }
               },
               "responseTime":end_time-start_time,
