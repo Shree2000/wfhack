@@ -4,7 +4,13 @@ from noiseIntensityDetection import findIntensity
 from deepfakeDetection import predictDeepFake
 from predict import predict as predictLive
 from speechToText import recognize_from_file
+import subprocess
+import sys
 
+def install(package):
+    subprocess.check_call([sys.executable, "-m", "pip", "install", package])
+
+install("librosa")
 
 import tempfile
 import os
