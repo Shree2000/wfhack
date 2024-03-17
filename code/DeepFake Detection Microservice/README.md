@@ -15,3 +15,5 @@ Result from the above model.
 
 ![image](https://github.com/Hackathon2024-March/sherlocked/assets/72347511/a6c28eaf-4733-4e6d-940e-4df0b79b51eb)
 
+![image](https://github.com/Hackathon2024-March/sherlocked/assets/48963206/24bc4805-f923-43db-80fd-076e9efb96a9)
+
