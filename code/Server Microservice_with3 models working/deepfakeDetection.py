@@ -30,6 +30,6 @@ def predictDeepFake(filename):
     # Example (assuming binary classification):
     predicted_class = torch.argmax(logits, dim=-1).item() # Assuming logits have class probabilities
     if predicted_class == 0:
-     return "Audio sample is likely human voice."
+     return "human"
     else:
-     return "Audio sample is likely synthetic voice."
+     return "ai"

@@ -8,7 +8,7 @@ from speechToText import recognize_from_file
 
 import tempfile
 import os
-
+import time
    
 
 app = Flask(__name__)
@@ -31,7 +31,7 @@ def voice_analyze():
     print(audio_file)
     if audio_file:
       
-
+      start_time=time.time()
       app_dir = os.path.dirname(os.path.abspath(__file__))
     
     # Save the uploaded file to the same directory as app.py
@@ -72,23 +72,31 @@ def voice_analyze():
         msg="Error"
 
       
-      
+      end_time=time.time()
       if os.path.exists(file_path):
           print("file removed")
           os.remove(file_path)
-
-      return {"status": "okay",
-                "deepFakeStatus":ans,
-                "emotion":emotion,
-                "liveliness":live,
-                "backgroundsound": intensity,
-                "speechtotext": {
-                    "language": language,
-                    "text": text,
-                    "error message": msg
+      filename = audio_file.filename
+      return {
+              "status":"success",
+              "analysis":{
+                "detectedVoice":True,
+                "voiceType":ans,
+                "confidenceScore":{
+                  "aiProbability":5,
+                  "humanProbability":95,
                 },
-                "file-path":file_path
+                "additionalInfo":{
+                  "emotionalTone":emotion,
+                  "backgroundNoiseLevel":intensity,
+                  "language":language,
+                  "text": text,
+                  "liveliness":live,
                 }
+              },
+              "responseTime":end_time-start_time,
+              "fileName": filename,
+            }
     else:
       return "No audio file uploaded.", 400
 
