@@ -20,7 +20,7 @@ The primary objective of this project is to develop effective countermeasures ag
 ### Dataset:-
 #### For Emotion Prediction  
 1. *RAVDESS (Ryerson Audio-Visual Database of Emotional Speech and Song)*:
-   - RAVDESS is a dataset designed for research on emotional speech and song. It contains audio and video recordings of 24 professional actors (12 male, 12 female) performing various          scripted emotions.
+   - RAVDESS is a dataset designed for research on emotional speech and song. It contains audio and video recordings of 24 professional actors (12 male, 12 female) performing various scripted emotions.
 
 2. *CESS (Chinese Emotional Speeches Dataset)*:
    - CESS is a dataset aimed at studying emotional speech in the Chinese language. It consists of audio recordings of speakers expressing various emotions in Mandarin Chinese.
@@ -40,8 +40,8 @@ The primary objective of this project is to develop effective countermeasures ag
 2. We then compared the intensity of background noise with the audio without noise to decide the background sound level.
 
 #### For Liveliness detection  
-
-#### For Speech to text Conversion
+Primarily based on the ASVspoof 2017 Version 2.0 dataset.
+In addition to the ASVspoof dataset, the authors introduced a self-built replay attack dataset, as well as various other attack methods including hidden speech, ultrasonic speech commands, and synthesized speech, to validate the effectiveness of the Void system.
 
 
 ## Setup
@@ -51,5 +51,10 @@ The primary objective of this project is to develop effective countermeasures ag
 $ https://github.com/Hackathon2024-March/sherlocked.git
 $ cd code/Server Microservice_with3 models working
 ```
+2. Start Services
 
+ ```bash
+$ python app.py
+```
+3. If the build and run went without problems, then you can follow the link http://127.0.0.1:5000/. (Note that you won't see any content on the site since the database is empty)
 
